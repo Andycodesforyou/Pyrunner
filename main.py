@@ -1,6 +1,15 @@
 # at 18:45 framerate can change notes
 # at 1:08:15 follow along (Maybe start a few minutes back)
 
+"""
+git init
+git status
+git add
+git rm
+git commit -m ""
+
+"""
+
 import pygame
 from sys import exit
 
