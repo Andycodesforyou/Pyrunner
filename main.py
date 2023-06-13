@@ -61,7 +61,8 @@ while True:
     #text/score
     pygame.draw.rect(screen, 'White', score_rect, 20)
     pygame.draw.rect(screen, 'White', score_rect)
-   
+
+
     screen.blit(score_surface, score_rect)
 
     #snail animation 
