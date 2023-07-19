@@ -1,5 +1,5 @@
 # at 18:45 framerate can change notes
-# at 1:40:40 follow along documentation reference draw line - (already done but good practice)
+# at 1:49:30 follow along documentation reference draw line - (already done but good practice)
 
 """
 git init
@@ -24,6 +24,8 @@ clock = pygame.time.Clock()
 #Font test
 test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 
+#game Active variable
+game_active = True
 
 #Background surfaces
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
@@ -63,36 +65,39 @@ while True:
             if player_rect.bottom == 300:
                 player_gravity = -20
 
-    #Background
-    screen.blit(sky_surface, (0,0))
-    screen.blit(ground_surface, (0,300))
-    
-    #text/score
-    pygame.draw.rect(screen, '#c0e8ec', score_rect, 20)
-    pygame.draw.rect(screen, '#c0e8ec', score_rect)
-    
+    if game_active:
+        #Background
+        screen.blit(sky_surface, (0,0))
+        screen.blit(ground_surface, (0,300))
+        
+        #text/score
+        pygame.draw.rect(screen, '#c0e8ec', score_rect, 20)
+        pygame.draw.rect(screen, '#c0e8ec', score_rect)
+        
 
-    screen.blit(score_surface, score_rect)
+        screen.blit(score_surface, score_rect)
 
-    #snail animation 
-    snail_rect.x -=4
+        #snail animation 
+        snail_rect.x -=4
 
-    if snail_rect.x < -100:
-        snail_rect.x = 880
+        if snail_rect.x < -100:
+            snail_rect.x = 880
 
-    #Snail
-    screen.blit(snail_surface, snail_rect)
-    
-    #Player & input
-    player_gravity += 1
-    player_rect.y += player_gravity
-    if player_rect.bottom >= 300: player_rect.bottom = 300
-    screen.blit(player_surface, player_rect)
+        #Snail
+        screen.blit(snail_surface, snail_rect)
+        
+        #Player & input
+        player_gravity += 1
+        player_rect.y += player_gravity
+        if player_rect.bottom >= 300: player_rect.bottom = 300
+        screen.blit(player_surface, player_rect)
 
-    #Collision
-    if snail_rect.colliderect(player_rect):
-        pygame.quit()
-        exit()
+        #Collision
+        if snail_rect.colliderect(player_rect):
+            game_active = False
+
+    else:
+        screen.fill('yellow')
     
     pygame.display.update()
     clock.tick(60)
