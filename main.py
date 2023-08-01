@@ -1,5 +1,5 @@
 # at 18:45 framerate can change notes
-# at 2:24:17
+# at 2:47:29
 
 
 """
@@ -171,6 +171,7 @@ while True:
     else:
         screen.fill((94,129,162))
         screen.blit(player_stand, player_stand_rect)
+        obstacle_rect_list.clear()
         display_title()
         score_message = test_font.render(f'Your score: {score}', False, 'White')
         score_message_rect = score_message.get_rect(center = (400, 350))
