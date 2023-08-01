@@ -50,6 +50,19 @@ def collisions(player, obstacles):
         for obstacle_rect in obstacles:
             if player.colliderect(obstacle_rect): return False
 
+def player_animation():
+    global player_surface, player_index
+
+    if player_rect.bottom < 300:
+        player_surface = player_jump
+    else:
+        player_index += 0.1
+        if player_index >= len(player_walk):player_index = 0
+        player_surface = player_walk[int(player_index)]
+
+    #play walking animation if player is on floor 
+    #display the jump surface when player is not on floor
+
     return True
 pygame.init()
 screen = pygame.display.set_mode((800, 400))
@@ -86,9 +99,17 @@ obstacle_rect_list = {}
 
 
 #Player Surface & stuff
-player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+player_walk_1 = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+player_walk_2 = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+player_walk = [player_walk_1, player_walk_2]
+player_index = 0
+player_jump = pygame.image.load('graphics/Player/jump.png').convert_alpha()
+
+player_surface = player_walk[player_index]
 player_rect = player_surface.get_rect(midbottom = (80, 300))
 player_gravity = 0   
+
+
 #intro Screen 
 player_stand = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
@@ -159,6 +180,7 @@ while True:
         player_gravity += 1
         player_rect.y += player_gravity
         if player_rect.bottom >= 300: player_rect.bottom = 300
+        
         screen.blit(player_surface, player_rect)
         #Obstacle movement
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
@@ -172,6 +194,8 @@ while True:
         screen.fill((94,129,162))
         screen.blit(player_stand, player_stand_rect)
         obstacle_rect_list.clear()
+        player_rect.midbottom = (80,300)
+        player_gravity = 0
         display_title()
         score_message = test_font.render(f'Your score: {score}', False, 'White')
         score_message_rect = score_message.get_rect(center = (400, 350))
